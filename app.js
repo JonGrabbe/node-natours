@@ -6,7 +6,13 @@ const tourRouter = require('./routes/tourRouter')
 
 app.use(express.json())
 
-app.use(morgan('dev'))
+
+if(process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'))
+}
+app.use(express.static(`${__dirname}/public`))
+
+// console.log(app.get('env'))
 
 // app.get('/', (req, res) => {
 //     console.log('hi everybody')
@@ -22,16 +28,6 @@ app.use((req, res, next) => {
 })
 
 app.use('/api/v1/tours', tourRouter)
-
-// app.route('/api/v1/tours/:id')
-//     .get(getTours)
-
-// app.route('/api/v1/tours/')
-//     .post(addTour)
-
-// app.route('/api/v1/users')
-//     .get()
-
 
 
 module.exports = app;
