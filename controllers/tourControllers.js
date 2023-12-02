@@ -1,8 +1,8 @@
 const fs = require('fs')
 
-const data = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`));
+// const data = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`));
 
-exports.checkID = (req, res, next, val) => {
+// exports.checkID = (req, res, next, val) => {
     // if(req.params.id * 1 > data.length) {
     //     console.log('invalid id')
     //     return res.status(404).json({
@@ -10,8 +10,8 @@ exports.checkID = (req, res, next, val) => {
     //         message: 'Invalid ID'
     //     })
     // }
-    next()
-}
+    // next()
+// }
 
 exports.checkBody = (req, res, next) => {
     console.log(req.body.name)
