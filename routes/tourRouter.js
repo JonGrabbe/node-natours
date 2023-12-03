@@ -21,16 +21,15 @@ Router.param('id', (req, res, next, val) => {
 
 
 Router
-    .route('/:id')
-    .get(tourController.checkBody, tourController.getTours)
-
+    .route('/')
+    .get(tourController.getAllTours)
 
 Router
     .route('/add-tour')
     .post(tourController.addTour)
 
 Router
-    .route('/all')
-    .get(tourController.getAllTours)
+    .route('/:id')
+    .get(tourController.getTour)
 
 module.exports = Router;

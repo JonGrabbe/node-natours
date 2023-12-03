@@ -58,12 +58,12 @@ exports.addTour = async (req, res) => {
 
 }
 
-exports.getTours = (req, res) => {
-    console.log(req.body)
-    console.log(req.requestTime)
+exports.getTour = async (req, res) => {
+    // console.log(req.body)
+    // console.log(req.requestTime)
 
-    const id = req.params.id * 1;
-    const tour = data.find(el => el.id === id)
+    // const id = req.params.id * 1;
+    // const tour = data.find(el => el.id === id)
 
     // if(id > data.length - 1) {
     //     res.status(404).json({
@@ -73,12 +73,21 @@ exports.getTours = (req, res) => {
     //     })
     // }
 
-    res.status(201).json({
-        status: 'success',
-        data: {
-            tour
-        }
-    })
+    try {
+        const tour = await Tour.findById(req.params.id);
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                tour
+            }
+        })
+    } catch(err) {
+        res.status(400).json({
+            status: 'fail',
+            message: err
+        })
+    }
 }
 
 exports.getAllTours = async (req, res) => {
