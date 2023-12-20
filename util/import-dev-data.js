@@ -1,11 +1,12 @@
 
 const dotenv = require('dotenv');
-dotenv.config({path: './config.env'})
+dotenv.config({path: '../config.env'})
 const mongoose = require('mongoose');
 const Tour = require('../models/toursModel');
 const fs = require('fs')
 
-const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
+// const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
+console.log(process.env.DATABASE)
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -15,7 +16,7 @@ mongoose.connect(process.env.DATABASE, {
     console.log('DB connection successful!')
 })
 
-const tours = JSON.parse(fs.readFileSync('./dev-data/data/tours-simple.json', 'utf-8'))
+const tours = JSON.parse(fs.readFileSync('../dev-data/data/tours-simple.json', 'utf-8'))
 
 const importData = async () => {
     try {
