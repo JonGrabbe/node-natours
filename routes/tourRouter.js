@@ -28,6 +28,12 @@ Router
     .route('/add-tour')
     .post(tourController.addTour)
 
+Router.param('id', (req, res, next, val) => {
+    console.log(`Tour id is: ${val}`)
+    next()
+
+})
+
 Router
     .route('/:id')
     .get(tourController.getTour)

@@ -92,7 +92,40 @@ exports.getTour = async (req, res) => {
 
 exports.getAllTours = async (req, res) => {
     try {
-        const tours = await Tour.find()
+        // console.log(req.query)
+        const queryObj = {...req.query}
+        const excluededFields = ['page', 'sort', 'limit', 'fields']
+        excluededFields.forEach(el => delete queryObj[el])
+
+        // advanced filtering
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
+        // console.log(JSON.parse(queryStr))
+
+        // console.log(req.query, queryObj)
+
+        queryStr = JSON.parse(queryStr)
+        let query = Tour.find(queryStr)
+
+        // sorting
+        console.log(req.query.sort)
+        if(req.query.sort) {
+            let sortBy = req.query.sort.split(',').join(' ')
+            query = query.sort(sortBy)
+        } else {
+            query = query.sort('-createdAt')
+        }
+
+        // query limiting
+        if(req.query.fields) {
+            const fields = req.query.fields.split(',').join(' ')
+            query = query.select(fields)
+        } else {
+            query = query.select('-__v')
+        }
+       
+
+        const tours = await query;
     
         res.status(200).json({
             status: 'success',
