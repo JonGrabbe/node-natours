@@ -90,6 +90,13 @@ exports.getTour = async (req, res) => {
     }
 }
 
+exports.aliasTopTours = (req, res, next) => {
+    req.query.limit = '5'
+    req.query.sort = '-ratingsAverage,price'
+    // req.query.fields = '-ratingsAverage,price'
+    next()
+}
+
 exports.getAllTours = async (req, res) => {
     try {
         // console.log(req.query)
