@@ -14,6 +14,39 @@ const Tour = require('../models/toursModel')
     // next()
 // }
 
+class APIfeatures {
+    constructor(query, queryString) {
+        this.query = query;
+        this.queryString = queryString
+    }
+
+    filter() {
+        const queryObj = {...this.queryString}
+        const excluededFields = ['page', 'sort', 'limit', 'fields']
+        excluededFields.forEach(el => delete queryObj[el])
+
+        // advanced filtering
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)
+        // console.log(JSON.parse(queryStr))
+
+        // console.log(req.query, queryObj)
+
+        queryStr = JSON.parse(queryStr)
+        //let query = Tour.find(queryStr)
+        this.query.find(JSON.parse(queryStr))
+    }
+
+    sort() {
+        if(this.queryString.sort) {
+            const sortBy = this.queryString.sort.split(',').join(' ')
+            this.query = this.query.sort(sortBy)
+        } else {
+            this.query = this.query.sort('-createdAt');
+        }
+    }
+}
+
 exports.checkBody = (req, res, next) => {
     console.log(req.body.name)
     console.log(req.body.price)
@@ -100,7 +133,7 @@ exports.aliasTopTours = (req, res, next) => {
 exports.getAllTours = async (req, res) => {
     try {
         // console.log(req.query)
-        const queryObj = {...req.query}
+       /*  const queryObj = {...req.query}
         const excluededFields = ['page', 'sort', 'limit', 'fields']
         excluededFields.forEach(el => delete queryObj[el])
 
@@ -121,7 +154,9 @@ exports.getAllTours = async (req, res) => {
             query = query.sort(sortBy)
         } else {
             query = query.sort('-createdAt')
-        }
+        } */
+
+        APIfeatures.filter()
 
         // query limiting
         if(req.query.fields) {
