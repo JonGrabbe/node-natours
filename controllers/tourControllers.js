@@ -156,7 +156,7 @@ exports.getAllTours = async (req, res) => {
             query = query.sort('-createdAt')
         } */
 
-        APIfeatures.filter()
+        // APIfeatures.filter()
 
         // query limiting
         if(req.query.fields) {
