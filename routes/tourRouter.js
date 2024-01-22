@@ -31,7 +31,6 @@ Router
 Router.param('id', (req, res, next, val) => {
     console.log(`Tour id is: ${val}`)
     next()
-
 })
 
 Router

@@ -21,11 +21,11 @@ app.use(express.static(`${__dirname}/public`))
 
 // const data = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`));
 
-app.use((req, res, next) => {
-    console.log('hellow from the middlewhare');
-    req.requestTime = new Date().toISOString();
-    next()
-})
+// app.use((req, res, next) => {
+//     console.log('hellow from the middlewhare');
+//     req.requestTime = new Date().toISOString();
+//     next()
+// })
 
 app.use('/api/v1/tours', tourRouter)
 

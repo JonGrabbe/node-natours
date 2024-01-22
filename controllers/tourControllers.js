@@ -35,6 +35,8 @@ class APIfeatures {
         queryStr = JSON.parse(queryStr)
         //let query = Tour.find(queryStr)
         this.query.find(JSON.parse(queryStr))
+
+        return this;
     }
 
     sort() {
@@ -44,6 +46,23 @@ class APIfeatures {
         } else {
             this.query = this.query.sort('-createdAt');
         }
+
+        return this;
+    }
+
+    limitingFields() {
+        // sorting
+        console.log(req.query.sort)
+        if(this.query.sort) {
+            let sortBy = this.query.sort.split(',').join(' ')
+            this.query = this.query.sort(sortBy)
+        } else {
+            query = query.sort('-createdAt')
+        }
+    }
+
+    find() {
+
     }
 }
 
